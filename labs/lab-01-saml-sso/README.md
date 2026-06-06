@@ -19,6 +19,11 @@ Configure SAML-based Single Sign-On between Microsoft Azure AD (Entra ID) and a 
 * SAML 2.0
 
 ---
+## Architecture Overview
+
+<img width="880" height="828" alt="image" src="https://github.com/user-attachments/assets/086c4ace-75a9-4b49-b75e-e0da66d0bf7a" />
+
+
 
 ## Configuration Steps
 
