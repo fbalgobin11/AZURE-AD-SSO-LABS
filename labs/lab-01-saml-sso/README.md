@@ -52,7 +52,8 @@ https://sptest.iamshowcase.com/metadata
 ACS URL:
 https://sptest.iamshowcase.com/acs
 
-[INSERT SCREENSHOT HERE]
+<img width="747" height="389" alt="image" src="https://github.com/user-attachments/assets/a13120d9-2db9-4c6f-a616-b19f3ac51fc4" />
+
 
 ---
 
@@ -63,7 +64,7 @@ Configured the following settings in the Azure AD SAML configuration page:
 * Identifier (Entity ID)
 * Reply URL (ACS URL)
 
-[INSERT SCREENSHOT HERE]
+<img width="705" height="618" alt="image" src="https://github.com/user-attachments/assets/c80959f2-2fbe-410b-af2b-ce24a4154382" />
 
 ---
 
@@ -77,7 +78,8 @@ This metadata contains:
 * SAML endpoints
 * Federation information
 
-[INSERT SCREENSHOT HERE]
+<img width="701" height="368" alt="image" src="https://github.com/user-attachments/assets/5425e0bb-25fc-4e4a-8dcd-7a210b8ef7cb" />
+
 
 ---
 
@@ -87,7 +89,8 @@ Uploaded the Federation Metadata XML to the Service Provider.
 
 This established trust between Azure AD and the Service Provider.
 
-[INSERT SCREENSHOT HERE]
+<img width="793" height="486" alt="image" src="https://github.com/user-attachments/assets/e1ca64bf-4982-46ef-b00f-17fc6f9d2653" />
+
 
 ---
 
@@ -97,7 +100,7 @@ Used the generated login URL and authenticated using an Azure AD user account.
 
 Successful authentication redirected the user back to the Service Provider.
 
-[INSERT SCREENSHOT HERE]
+<img width="811" height="511" alt="image" src="https://github.com/user-attachments/assets/913cc7ec-08a3-4fc6-8bc8-fcf9d5259856" />
 
 ---
 
@@ -109,6 +112,8 @@ Successful authentication redirected the user back to the Service Provider.
 4. Azure AD issues a SAML Assertion.
 5. Service Provider validates the assertion.
 6. User is granted access.
+
+
 
 ---
 
