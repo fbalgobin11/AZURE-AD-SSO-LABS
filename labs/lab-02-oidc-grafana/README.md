@@ -24,7 +24,8 @@ Implement OpenID Connect (OIDC) Single Sign-On between Microsoft Azure AD (Entra
 
 ## Architecture Overview
 
-[INSERT OIDC FLOW DIAGRAM HERE]
+<img width="760" height="805" alt="image" src="https://github.com/user-attachments/assets/c452495f-a27c-47c4-8024-4d23ef7dd33e" />
+
 
 ---
 
