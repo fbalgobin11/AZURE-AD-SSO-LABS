@@ -1,4 +1,4 @@
-<img width="847" height="361" alt="image" src="https://github.com/user-attachments/assets/804b8fe6-c82e-4534-aab2-a00150059d34" /># Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
+Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
 
 **Microsoft Entra ID (IdP) → Salesforce Developer Edition (SP) — SAML 2.0 Federation**
 
