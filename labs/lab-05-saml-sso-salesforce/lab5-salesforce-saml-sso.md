@@ -1,4 +1,4 @@
-# Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
+<img width="847" height="361" alt="image" src="https://github.com/user-attachments/assets/804b8fe6-c82e-4534-aab2-a00150059d34" /># Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
 
 **Microsoft Entra ID (IdP) → Salesforce Developer Edition (SP) — SAML 2.0 Federation**
 
@@ -164,11 +164,10 @@ Fill in the form using your real email address — this is where the verificatio
 
 Check your email and click the verification link to activate your org.
 
-📸 *Screenshot: Salesforce Developer Edition signup form*
 
 📸 *Screenshot: Salesforce org activated — developer home page*
+<img width="935" height="410" alt="image" src="https://github.com/user-attachments/assets/88f77413-cc32-4b48-94bb-59c0f9587ef0" />
 
----
 
 **Step 2 — Set Up My Domain**
 
@@ -189,9 +188,9 @@ https://zuniverse7lab-dev-ed.develop.my.salesforce.com
 
 > Without My Domain, the Single Sign-On Settings page does not show SAML configuration options. My Domain must be active before proceeding.
 
-📸 *Screenshot: My Domain setup page — subdomain entered*
 
 📸 *Screenshot: My Domain registered and active — new URL shown*
+<img width="927" height="348" alt="image" src="https://github.com/user-attachments/assets/52178f04-9733-4151-92da-86d0e119cb0e" />
 
 ---
 
@@ -206,9 +205,9 @@ https://zuniverse7lab-dev-ed.develop.my.salesforce.com
 
 Using the gallery version is important — it includes pre-configured claim mappings that match what Salesforce expects.
 
-📸 *Screenshot: Salesforce found in Entra gallery*
 
 📸 *Screenshot: Salesforce Enterprise App created in Entra*
+<img width="922" height="396" alt="image" src="https://github.com/user-attachments/assets/6a57012b-cae0-415c-b6c9-af11d5164e6e" />
 
 ---
 
@@ -229,6 +228,7 @@ Replace `<subdomain>` with your actual My Domain subdomain.
 > For Salesforce Developer Edition the Identifier, Reply URL, and Sign-on URL are all the same value — your My Domain URL. This differs from ServiceNow where each URL was distinct.
 
 📸 *Screenshot: Azure AD Basic SAML Configuration — Salesforce My Domain URL entered*
+<img width="828" height="643" alt="image" src="https://github.com/user-attachments/assets/b2bc6bcf-0b49-4757-b203-ce7b4b3efabc" />
 
 ---
 
@@ -246,6 +246,8 @@ In **Attributes and Claims → Edit**, configure the Unique User Identifier:
 📸 *Screenshot: Unique User Identifier — user.userprincipalname selected*
 
 📸 *Screenshot: Final Attributes and Claims configuration*
+<img width="841" height="583" alt="image" src="https://github.com/user-attachments/assets/078f19b0-ef9a-446c-9215-ecbf0b50d7a1" />
+
 
 ---
 
@@ -271,6 +273,10 @@ In the Salesforce Enterprise App go to **Users and Groups → Add user/group**:
 > Azure AD will refuse to issue a SAML assertion for any user not assigned to the Enterprise Application. This applies to every SAML lab.
 
 📸 *Screenshot: Test user Goten assigned to Salesforce Enterprise App*
+
+<img width="845" height="594" alt="image" src="https://github.com/user-attachments/assets/9c4651e6-177b-46e0-b186-87685673bbf1" />
+
+
 
 ---
 
@@ -309,6 +315,8 @@ Salesforce reads the XML and auto-populates all SAML fields:
 
 📸 *Screenshot: SAML SSO settings auto-populated after XML upload*
 
+<img width="847" height="361" alt="image" src="https://github.com/user-attachments/assets/6d2a497d-d3a3-41b7-82d4-91c3c6ab11b6" />
+
 ---
 
 **Step 10 — Configure SAML Identity Type and Save**
@@ -342,6 +350,8 @@ Click **Save**.
 
 📸 *Screenshot: My Domain Authentication Configuration — Login Page and AzureSSO both checked*
 
+<img width="743" height="480" alt="image" src="https://github.com/user-attachments/assets/dfe591d0-4a48-4387-b00d-065f0e6f697f" />
+
 ---
 
 ### Part 4 — Create Salesforce Test User
@@ -369,6 +379,8 @@ The Salesforce username must exactly match the NameID being sent by Azure AD.
 📸 *Screenshot: New User form in Salesforce — username set to Goten@zuniverse7.onmicrosoft.com*
 
 📸 *Screenshot: Test user created in Salesforce Users list*
+
+<img width="744" height="396" alt="image" src="https://github.com/user-attachments/assets/bedd4ab5-18a6-4aef-9236-ded98b348de0" />
 
 ---
 
@@ -414,11 +426,21 @@ Verify each field:
 
 📸 *Screenshot: SAML Tracer — full assertion XML with NameID and StatusCode visible*
 
+<img width="654" height="370" alt="image" src="https://github.com/user-attachments/assets/30ed39aa-88a0-4a70-99b4-66a162f608d4" />
+
 📸 *Screenshot: SAML Tracer — authnmethodreferences claim showing multipleauthn*
+
+<img width="749" height="190" alt="image" src="https://github.com/user-attachments/assets/1118a150-bdf4-45f3-86fc-93a263100221" />
+
+
+<img width="735" height="404" alt="image" src="https://github.com/user-attachments/assets/0edd4445-1896-46f1-9c25-da9c0680fdb2" />
+
 
 ---
 
 **Step 16 — Confirm Successful Login**
+
+<img width="744" height="276" alt="image" src="https://github.com/user-attachments/assets/ff307ea2-1106-4e72-a0a9-85e54012a31f" />
 
 After SSO completes you should be logged into Salesforce as Goten. Verify:
 
@@ -427,6 +449,8 @@ After SSO completes you should be logged into Salesforce as Goten. Verify:
 - No device activation prompt appeared
 
 📸 *Screenshot: Salesforce home page — logged in as Goten via SSO*
+
+<img width="744" height="301" alt="image" src="https://github.com/user-attachments/assets/12da3248-85e6-44c0-b37a-f035e6b01ebc" />
 
 ---
 
