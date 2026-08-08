@@ -1,4 +1,4 @@
-Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
+## Lab 5 — SAML SSO: Microsoft Entra ID + Salesforce Developer Edition
 
 **Microsoft Entra ID (IdP) → Salesforce Developer Edition (SP) — SAML 2.0 Federation**
 
