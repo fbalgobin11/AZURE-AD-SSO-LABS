@@ -182,6 +182,19 @@ The matching attribute is how Entra determines if a user already exists in Sales
 
 <cite index="32-1">To get your Salesforce security token, open a new tab and sign into the same Salesforce admin account. On the top right corner of the page, select your name, and then select Settings.</cite>
 
+Create SCIM service Account:
+In Salesforce go to Setup → Administration → Users → New User and create:
+
+Field	Value
+First Name	SCIM
+Last Name	Integration
+Email	Your real Gmail
+Username	scim.integration@zuniverse7.dev
+User Licence	Salesforce
+Profile	System Administrator (or a custom profile with API Enabled + Manage Users)
+
+Then generate the Security Token from that account and use those credentials in Entra.
+
 1. Log into your Salesforce Developer org
 2. Click your name/avatar in the top right → **Settings**
 3. In the left navigation, expand **My Personal Information**
