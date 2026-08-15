@@ -189,7 +189,7 @@ Field	Value
 First Name	SCIM
 Last Name	Integration
 Email	Your real Gmail
-Username	scim.integration@zuniverse7.dev
+Username	**scim.integration@zuniverse7.dev**
 User Licence	Salesforce
 Profile	System Administrator (or a custom profile with API Enabled + Manage Users)
 
