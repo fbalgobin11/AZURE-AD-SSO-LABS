@@ -323,7 +323,8 @@ Then generate the Security Token from that account and use those credentials in 
 4. Click **Reset My Security Token**
 5. Click **Reset Security Token** button
 
-📸 *Screenshot: Salesforce Settings — My Personal Information → Reset My Security Token*
+📸 *Screenshot: Salesforce Settings — My Personal Information → Reset My Security Token*<img width="749" height="288" alt="image" src="https://github.com/user-attachments/assets/0b2d9b54-d12f-4ea7-a695-25bb8c721cd2" />
+
 
 📸 *Screenshot: Reset Security Token confirmation page*
 
@@ -360,7 +361,8 @@ Then generate the Security Token from that account and use those credentials in 
 
 📸 *Screenshot: Provisioning Mode set to Automatic*
 
----
+---<img width="751" height="322" alt="image" src="https://github.com/user-attachments/assets/afbc811b-fcae-4ae7-b3d0-bb98637306fb" />
+
 
 **Step 4 — Configure Admin Credentials**
 
@@ -378,6 +380,7 @@ In the **Admin Credentials** section:
 > **Why the Security Token is needed:** Salesforce requires the security token when API connections come from outside a trusted IP range. Entra ID's provisioning service connects from Microsoft's cloud infrastructure, which is outside your Salesforce org's trusted IPs, so the token is mandatory.
 
 📸 *Screenshot: Admin Credentials section — username, password, secret token and tenant URL entered*
+<img width="751" height="399" alt="image" src="https://github.com/user-attachments/assets/d05d16b9-f720-41d9-8b97-76ebaa3520da" />
 
 ---
 
@@ -391,7 +394,10 @@ Entra ID will attempt to authenticate to the Salesforce SCIM endpoint using your
 - Entra can reach the Salesforce SCIM API
 - The admin account has API access enabled
 
-📸 *Screenshot: Test Connection — success message*
+📸 *Screenshot: Test Connection — success message* *Connection failed, unable to complete lab see beginning of lab notice*
+<img width="1897" height="818" alt="image" src="https://github.com/user-attachments/assets/e50ee3a4-2a0a-4763-9286-2601034c9f30" />
+
+<img width="1474" height="618" alt="image" src="https://github.com/user-attachments/assets/a298c338-32e5-459b-98ab-8cc8ec6455c6" />
 
 > **If test connection fails**, check:
 > - Security token is correct — no spaces or extra characters
