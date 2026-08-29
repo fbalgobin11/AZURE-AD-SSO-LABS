@@ -1,3 +1,125 @@
+
+## ⚠️ Lab Status: Incomplete — Known Platform Compatibility Issue
+
+This lab is incomplete due to a known compatibility issue between Microsoft Entra ID and newer Salesforce Developer Edition orgs. This is not a configuration error — it is a platform-level breaking change that is currently unresolved as of August 2026.
+
+This section documents what was attempted, what failed, why it failed, and how enterprises handle this in production. The troubleshooting process itself is documented here as a real-world IAM engineering experience.
+
+---
+
+### What Was Attempted
+
+SCIM 2.0 automated user provisioning was configured between Microsoft Entra ID (SCIM client) and Salesforce Developer Edition (SCIM server) using the standard **Salesforce gallery Enterprise Application** in Entra ID, following the official Microsoft documentation:
+
+> [Configure Salesforce for Automatic User Provisioning — Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity/saas-apps/salesforce-provisioning-tutorial)
+
+All configuration steps were completed correctly:
+- ✅ Salesforce service account created with System Administrator profile
+- ✅ API Enabled and Manage Users permissions confirmed
+- ✅ Security Token generated from the service account
+- ✅ Entra provisioning configured with Admin Username, Password, Secret Token, and Tenant URL
+- ✅ Test Connection attempted
+
+---
+
+### What Failed
+
+The Test Connection returned the following error from Entra ID:
+
+```
+Error: You appear to have entered invalid credentials. Please confirm you are 
+using the correct information for an administrative account.
+
+Error code: SalesforceCredentialValidationUnavailable
+Details: We received an unexpected response from Salesforce.com. Please try 
+again. If the problem persists, please contact Microsoft Azure support.
+```
+
+**Crucially**, the Salesforce login audit log showed a **successful SOAP API login** — confirming the credentials were correct and the failure was not an authentication issue. The error was occurring after authentication, during the SCIM API session establishment.
+
+---
+
+### Root Cause
+
+The root cause was identified through the Microsoft Q&A forum:
+
+> *"The built-in Salesforce gallery app in Microsoft Entra today still only speaks the Connected App + username/token model. It hasn't yet been updated to support Salesforce's new External Client App (OAuth Client Credentials) flow for SCIM."*
+>
+> — Microsoft External Staff Moderator, March 2026
+> [Source: Microsoft Q&A — SCIM User Provisioning with Salesforce via External Client App](https://learn.microsoft.com/en-us/answers/questions/5834251/scim-user-provisioning-with-salesforce-via-externa)
+
+Salesforce has migrated newer Developer Edition orgs from the legacy **Connected App + username/password + Security Token** authentication model to **External Client App with OAuth 2.0 Client Credentials**. The Entra gallery app for Salesforce has not been updated to support this new authentication model.
+
+**Timeline of the breaking change:**
+
+| Date | Change |
+|---|---|
+| Pre-2026 | Salesforce gallery app in Entra worked via username + security token |
+| Early 2026 | Salesforce migrated newer orgs to External Client App (OAuth 2.0) |
+| March 2026 | Multiple enterprises reported the gallery app broken on newer orgs |
+| August 2026 | Issue still unresolved — Microsoft gallery app not yet updated |
+
+---
+
+### Resolution Paths Investigated
+
+**Path 1 — Custom OAuth 2.0 Non-Gallery App in Entra**
+
+The Microsoft moderator recommended creating a custom non-gallery Enterprise App in Entra using OAuth 2.0 Client Credentials. However, this path also has a blocker:
+
+> *"The error is expected — Salesforce SCIM requires a ProfileId (entitlement), but Entra does NOT send it by default. You must add a custom attribute mapping for entitlements."*
+
+Multiple enterprises in the thread attempted this approach and were unable to pass the required Salesforce `ProfileId` in the SCIM payload. As of August 2026, no working solution has been documented.
+
+**Path 2 — Salesforce Support Case to Re-enable Security Token**
+
+One enterprise resolved the issue by raising a Salesforce support case to re-enable the security token option on their org, allowing the legacy gallery app to work. This option is only available to paid Salesforce customers — not Developer Edition accounts.
+
+**Path 3 — Enterprise Middleware (Production Approach)**
+
+In production enterprise environments, Entra → Salesforce provisioning is typically handled through:
+
+- **SailPoint IdentityNow** — pre-built Salesforce connector handles ProfileId and entitlement mapping
+- **MuleSoft** — Salesforce's own integration platform, commonly used for complex provisioning workflows
+- **iPaaS platforms** (Workato, Boomi) — middleware that enriches SCIM payloads with Salesforce-specific attributes before forwarding to the SCIM endpoint
+
+This mirrors the **SailPoint → CyberArk** integration pattern — where a dedicated SCIM gateway was required because CyberArk's API predates native SCIM support. The pattern is the same: when an application has specific requirements that generic SCIM cannot satisfy (like Salesforce's ProfileId), a middleware layer is needed to enrich the payload.
+
+---
+
+### Key Learnings from the Failed Integration
+
+Despite the lab being incomplete, the troubleshooting process surfaced several important IAM concepts:
+
+**1. Platform compatibility must be verified before designing integrations**
+The Entra gallery app and Microsoft documentation did not reflect the Salesforce API deprecation. In a real enterprise this would be caught during a technical discovery phase before implementation begins.
+
+**2. Successful authentication does not guarantee successful provisioning**
+The Salesforce audit log showed a successful SOAP API login while Entra reported invalid credentials. This demonstrated that authentication and the subsequent API session establishment are separate operations — a useful debugging insight.
+
+**3. Generic SCIM has limitations with complex SaaS applications**
+Salesforce requires application-specific attributes (ProfileId, entitlements, licence type) that are outside the core SCIM 2.0 schema. The standard Entra SCIM client cannot enrich payloads with these custom attributes without significant custom configuration. This is why enterprise IGA platforms like SailPoint exist — their pre-built connectors handle these application-specific requirements out of the box.
+
+**4. The OAuth 2.0 migration is an industry-wide trend**
+Salesforce's move away from username/password + token toward OAuth 2.0 Client Credentials is part of a broader industry shift. This same pattern is occurring across Workday, ServiceNow, and other enterprise SaaS platforms. IAM engineers need to understand both the legacy and modern authentication models to troubleshoot integrations across organisations at different stages of this migration.
+
+---
+
+### Interview Narrative
+
+If asked about this lab in an interview:
+
+> *"I configured SCIM provisioning from Entra ID to Salesforce but encountered a known platform compatibility issue — Salesforce had migrated newer developer orgs to OAuth 2.0 Client Credentials while the Entra gallery app still uses the legacy security token model. I diagnosed the root cause using the Salesforce audit log, which showed successful authentication but failure at the API session level, and confirmed it against the Microsoft Q&A forum where multiple enterprises reported the same issue. This highlighted why enterprises use IGA platforms like SailPoint rather than native SCIM for complex applications — the out-of-the-box integration lacks the attribute enrichment capability needed for Salesforce-specific requirements like ProfileId. In my work at NAB we solved this exact class of problem using SailPoint with a dedicated SCIM gateway for CyberArk."*
+
+---
+
+### Lab Continuation
+
+The remainder of this lab documents the intended configuration as a reference for when the Microsoft gallery app is updated to support OAuth 2.0 Client Credentials, or for environments where the security token method is still available. The SCIM concepts, attribute mappings, provisioning cycle behaviour, and governance principles documented below are all accurate and applicable regardless of the authentication method used to connect Entra to Salesforce.
+
+
+
+
 # Lab 6 — SCIM User Provisioning: Microsoft Entra ID + Salesforce
 
 **Automated User Lifecycle Management — Entra ID (SCIM Client) → Salesforce (SCIM Server)**
